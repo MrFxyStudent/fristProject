@@ -4,6 +4,11 @@
     margin: 0;
 }
 
-h1 {
-    color: red;
+#nav {
+    z-index: 1;
 }
+
+
+/* #app {
+    padding: 44px 0 0;
+} */
