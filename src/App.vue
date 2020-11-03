@@ -7,16 +7,6 @@
 <script>
 import MentTab from "./components/common/MentTab/MentTab"
 
-
-// class className {
-//   constructor(name,age){
-//     this.name = name;
-//     this.age = age
-//   }
-// }
-// const one = new className('fdt',20)
-// console.log(one);
-
 export default {
   data(){
     return {
