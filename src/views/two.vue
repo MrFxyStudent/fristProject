@@ -1,6 +1,6 @@
 <template>
     <div id="two">
-        <h1 id="hhh">{{comImgNumTime}}</h1>
+        <h1 id="hhh" v-show="false">{{comImgNumTime}}</h1>
         <nav-top>
             <div slot='left'>nihao</div>
             <div slot='content'>nihao</div>
@@ -8,10 +8,10 @@
         </nav-top>
         <scroll class="twoContent" ref="scroll" @LoadingAxios="LoadingAxios">
             <!-- <div>{{bannerData.list}}</div> -->
-            <two-Banner :bannerData=bannerData></two-Banner>
+            <two-Banner :bannerData=bannerData @bannerImgLoad="bannerImgLoad"></two-Banner>
             <two-recommend :recommend=recommend></two-recommend>
             <two-feature></two-feature>
-            <two-tabcontrol :tabTextlist="['流行','新款','精选']" @typeFun="getType"></two-tabcontrol>
+            <two-tabcontrol :tabTextlist="['流行','新款','精选']" @typeFun="getType" ref="tabcontrol"></two-tabcontrol>
             <two-classification :twoClassificationData="twoClassificationData"></two-classification>
         </scroll>
         <two-scroll-top @click.native="scrollTopFun"></two-scroll-top>
@@ -21,6 +21,7 @@
 <script>
 import scroll from '../components/common/scroll'
 import {oneRequest,dataRequest} from "../network/home.js"
+import {debonuse} from '../common/utils/debonuse'
 import navTop from "../components/common/navTop/navTop"
 import twoScrollTop from '../components/common/scrollTop/scrollTop'
 import twoBanner from '../components/content/two/banner'
@@ -40,17 +41,18 @@ export default {
         tabType:'pop',
         pageNum:1,
         isBoolerTabType:true,
-        imgNumTime:-1
+        imgNumTime:-1,
+        debonuseRow:function(){},
+        tabcontrolHeight:0
         }
     },
-    computed:{
-        
+    computed:{    
         comImgNumTime(){
             if(typeof(this.$refs.scroll)=='undefined'){
                 return this.$store.state.imgNum
             }else{
-                this.$refs.scroll.scrollrefresh()
-                // refresh
+                // this.$refs.scroll.scrollrefresh()
+                this.debonuseRow()
                 return this.$store.state.imgNum
             }
         }
@@ -85,20 +87,15 @@ export default {
             this.dataRequest(this.tabType);
         },
         scrollTopFun(){
-            this.$refs.scroll.scrollTopTo()
-            this.$refs.scroll.scrollrefresh()
-            console.log(this.$refs.scroll);
-            
-
+            this.$refs.scroll.scrollTopTo();
         },
         LoadingAxios(a){
             this.pageNum++;
             this.dataRequest()
         },
-        hhhFun(){
-            this.imgNumTime++
-            console.log(this.imgNumTime);
-        }
+        bannerImgLoad(){
+            this.tabcontrolHeight = this.$refs.tabcontrol.$el.offsetTop;
+        },
     },
     watch:{},
     filters:{},
@@ -116,16 +113,12 @@ export default {
     created(){
         this.oneRequest()
         this.dataRequest()
-    
-
         // this.$bus.$on('imgLoadFunEmit',(res)=>{
         //     console.log(res);
         // })
     },
     mounted(){
-  
-        
-        
+        this.debonuseRow = debonuse(this.$refs.scroll.scrollrefresh,100)
     }
 }
 </script>
@@ -142,13 +135,6 @@ export default {
     top:200px;
     z-index:999;
 }
-.twoContent{
-    /* position: absolute;
-    left: 0;
-    right: 0;
-    top: 44px;
-    bottom: 49px; */
-     /* background: red */
-}
+
 
 </style>

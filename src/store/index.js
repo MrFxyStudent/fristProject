@@ -7,7 +7,6 @@ export default createStore({
     mutations: {
         imgNumAdd(state) {
             state.imgNum++;
-            console.log(state.imgNum);
         }
     },
     actions: {},

@@ -2,7 +2,7 @@
     <div class="banner">
         <div class="bannerRow">
             <div class="bannerA">
-                <img v-for="(bannerData,i) in bannerData.list" :key="i" :src="bannerData.image"/>
+                <img v-for="(bannerData,i) in bannerData.list" :key="i" :src="bannerData.image" @load="bannerImgLoad"/>
             </div>
         </div>
     </div>
@@ -12,6 +12,12 @@
 export default {
     data(){
         return{
+        }
+    },
+    methods:{
+        bannerImgLoad(){
+            console.log('----------');
+            this.$emit('bannerImgLoad');
         }
     },
     props:['bannerData']

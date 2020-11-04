@@ -20,9 +20,11 @@ export default {
     methods:{
         imgloadFun(){
             // console.log('图片加载完成');
-            this.$store.commit('imgNumAdd')
+            this.$store.commit('imgNumAdd');
             //  this.$bus.$emit('imgLoadFunEmit','图片加载完成')
-        }
+        },
+
+
     }
 
 }

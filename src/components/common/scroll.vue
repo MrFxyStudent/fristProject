@@ -45,7 +45,7 @@ export default {
         })
         //监听滚动坐标
         that.scroll.on('scroll',function(position){
-            // console.log(position);
+            console.log(position);
             if(that.scrollHeight==null){
                 return;
             }
