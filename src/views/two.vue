@@ -1,20 +1,27 @@
 <template>
     <div id="two">
+
         <h1 id="hhh" v-show="false">{{comImgNumTime}}</h1>
+     
         <nav-top>
             <div slot='left'>nihao</div>
             <div slot='content'>nihao</div>
             <div slot='right'>nihao</div>
         </nav-top>
-        <scroll class="twoContent" ref="scroll" @LoadingAxios="LoadingAxios">
+
+        <two-tabcontrol class="fixedStyle" :tabTextlist="['流行','新款','精选']" @typeFun="getType" ref="tabcontrol1" v-show="!controlShowDis"></two-tabcontrol>
+
+        <scroll class="twoContent" ref="scroll" @LoadingAxios="LoadingAxios" @scrollHeightFun="scrollHeightFun">
             <!-- <div>{{bannerData.list}}</div> -->
             <two-Banner :bannerData=bannerData @bannerImgLoad="bannerImgLoad"></two-Banner>
             <two-recommend :recommend=recommend></two-recommend>
             <two-feature></two-feature>
-            <two-tabcontrol :tabTextlist="['流行','新款','精选']" @typeFun="getType" ref="tabcontrol"></two-tabcontrol>
+            <two-tabcontrol :tabTextlist="['流行','新款','精选']" @typeFun="getType" ref="tabcontrol2" v-show="controlShowDis"></two-tabcontrol>
             <two-classification :twoClassificationData="twoClassificationData"></two-classification>
         </scroll>
-        <two-scroll-top @click.native="scrollTopFun"></two-scroll-top>
+
+        <two-scroll-top @click.native="scrollTopFun" v-show="!controlShowDis"></two-scroll-top>
+        
     </div>
 </template>
 
@@ -43,7 +50,8 @@ export default {
         isBoolerTabType:true,
         imgNumTime:-1,
         debonuseRow:function(){},
-        tabcontrolHeight:0
+        tabcontrolHeight:0,
+        controlShowDis:true
         }
     },
     computed:{    
@@ -83,6 +91,8 @@ export default {
         //普通函数
         getType(typeData){
             this.tabType = typeData;
+            this.$refs.tabcontrol1.tabColor = this.$store.tabcontrolIndex
+            this.$refs.tabcontrol2.tabColor = this.$store.tabcontrolIndex
             this.isBoolerTabType = true;
             this.dataRequest(this.tabType);
         },
@@ -94,8 +104,14 @@ export default {
             this.dataRequest()
         },
         bannerImgLoad(){
-            this.tabcontrolHeight = this.$refs.tabcontrol.$el.offsetTop;
+            this.tabcontrolHeight = this.$refs.tabcontrol2.$el.offsetTop;
         },
+        scrollHeightFun(res){
+            if(Math.abs(res.y) > this.tabcontrolHeight){
+                return this.controlShowDis = false
+            }
+            return  this.controlShowDis = true
+        }
     },
     watch:{},
     filters:{},
@@ -119,6 +135,9 @@ export default {
     },
     mounted(){
         this.debonuseRow = debonuse(this.$refs.scroll.scrollrefresh,100)
+    },
+    unmounted(){
+        console.log('destroyed');
     }
 }
 </script>
@@ -134,6 +153,13 @@ export default {
     left:100px;
     top:200px;
     z-index:999;
+}
+.fixedStyle{
+    position: fixed;
+    top: 44px;
+    left: 0;
+    right: 0;
+    z-index: 1;
 }
 
 

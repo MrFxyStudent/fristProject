@@ -24,7 +24,6 @@ function debonuse(fun,time){
     //防抖函数
     let timer = null;
     return function(){
-         console.log(timer);
         if(timer) clearTimeout(timer);
         timer = setTimeout(()=>{
             fun()
@@ -34,7 +33,7 @@ function debonuse(fun,time){
 let a = debonuse(name,1110)
 
 function name(params) {
-    console.log('name');
+    // console.log('name');
 }
 for(let i=0;i<30;i++){
     a()

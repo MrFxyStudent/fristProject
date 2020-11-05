@@ -11,12 +11,11 @@
 <script>
 export default {
     data(){
-        return{
-        }
+        return{}
     },
     methods:{
         bannerImgLoad(){
-            console.log('----------');
+            // console.log('----------');
             this.$emit('bannerImgLoad');
         }
     },

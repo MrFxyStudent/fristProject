@@ -24,6 +24,7 @@ export default {
         tabColorFun(index){
             console.log(index);
             this.tabColor = index;
+            this.$store.tabcontrolIndex = index;
             this.$emit('typeFun',this.typeData[index]);
         }
     }
@@ -33,8 +34,8 @@ export default {
 <style scoped>
 .tabControl{
     display: flex;
-    position:sticky;
-    top: 43px;
+    /* position:sticky;
+    top: 43px; */
     background: #fff;
 }
 .tabitem{

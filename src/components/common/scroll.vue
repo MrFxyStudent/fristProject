@@ -30,7 +30,7 @@ export default {
             this.scroll.scrollTo(0,0,500);
         },
          scrollrefresh(){
-            console.log('refresh');
+            // console.log('refresh');
             this.scroll.refresh();
         }
     },
@@ -45,12 +45,13 @@ export default {
         })
         //监听滚动坐标
         that.scroll.on('scroll',function(position){
-            console.log(position);
-            if(that.scrollHeight==null){
-                return;
-            }
+            // if(that.scrollHeight==null){
+            //     return;
+            // }
+            // console.log(position);
+
             that.viewPosition = position
-            that.$emit("scrollHeight",position)
+            that.$emit("scrollHeightFun",position)
         })
         //下上拉加载
         that.scroll.on('pullingUp',function(){

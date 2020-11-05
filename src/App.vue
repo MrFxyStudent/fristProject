@@ -1,6 +1,9 @@
 <template>
 <div>
-  <router-view></router-view>
+  <keep-alive>
+    <router-view></router-view>
+  </keep-alive>
+  
   <MentTab :dataFu="dataFu"></MentTab>
 </div>
 </template>
@@ -21,8 +24,7 @@ export default {
     components:{
       MentTab,
     },
-    created(){
-    }
+    created(){}
 }
 </script>
 <style>

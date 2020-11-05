@@ -12,10 +12,13 @@ export default {
         return {}
     },
     methods:{
-   oneFun(){
-       console.log(this.$route.params);
-       console.log(this);
-   }
+        oneFun(){
+            console.log(this.$route.params);
+            console.log(this);
+        }
+    },
+    unmounted(){
+        console.log('destroyed');
     }
 }
 </script>
